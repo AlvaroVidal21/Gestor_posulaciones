@@ -1,9 +1,11 @@
 ---
 title: "Gestor de Postulaciones — seguimiento simple para tu búsqueda laboral"
-description: "Cómo construí una herramienta personal con PHP, SQLite y Python para organizar mi búsqueda de empleo en TI."
+description: "Dashboard web para registrar postulaciones y script de Python con analíticas visuales en terminal — todo sobre una misma base de datos SQLite."
 pubDate: 2026-06-11
 tags: ["php", "sqlite", "python", "pandas", "bootstrap", "proyecto-personal"]
 ---
+
+Un dashboard web que te permite registrar y dar seguimiento a tus postulaciones laborales, acompañado de un script de Python que genera analíticas visuales directo en la terminal.
 
 ## Por qué lo hice?
 

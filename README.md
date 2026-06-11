@@ -11,7 +11,8 @@ Mantener trazabilidad de las postulaciones laborales para evitar que la informac
 - **PHP** — Lógica del servidor sin frameworks
 - **SQLite** — Base de datos embebida, sin configuración de servidor
 - **Bootstrap 5** — Interfaz responsive
-- **JavaScript** — Solo para interacciones simples (filtrado automático)
+- **JavaScript** — Solo para interacciones simples (filtrado automático y AJAX)
+- **Python + pandas** — Análisis de datos y gráficos en terminal (scripts/analytics.py)
 
 ## Características
 
@@ -27,6 +28,7 @@ Mantener trazabilidad de las postulaciones laborales para evitar que la informac
 
 - PHP 8.1 o superior con extensión PDO SQLite
 - SQLite3
+- Python 3.10+ y [uv](https://docs.astral.sh/uv/) (para dashboard de terminal con pandas)
 
 ## Instalación y ejecución
 
@@ -61,6 +63,9 @@ database/       Base de datos
 ├── schema.sql          Definición de la tabla postulaciones
 └── init.php            Script de inicialización
 
+scripts/        Herramientas complementarias
+└── analytics.py        Dashboard de análisis en terminal (pandas + plotext)
+
 docs/           Documentación del proyecto
 ```
 
@@ -73,6 +78,16 @@ docs/           Documentación del proyecto
 | Rechazado | La empresa rechazó la postulación |
 
 El estado Vencido se calcula automáticamente en cada consulta; no se almacena en la base de datos.
+
+## Dashboard de terminal (análisis con pandas)
+
+El script `scripts/analytics.py` genera un informe visual en la terminal con métricas, gráficos de barras, timeline y un histograma de antigüedad.
+
+```bash
+uv run scripts/analytics.py
+```
+
+Utiliza **pandas** para procesar los datos y **plotext + rich** para los gráficos y tablas en terminal.
 
 ## Documentación
 

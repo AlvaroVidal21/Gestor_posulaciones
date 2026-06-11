@@ -1,0 +1,18 @@
+# Base de datos SQLite
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Entorno y editor
+.env
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs del servidor PHP
+/php-server.log

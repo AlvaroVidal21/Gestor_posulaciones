@@ -1,56 +1,32 @@
----
-tipo: decision
-proyecto: Gestor de Postulaciones
-tags:
-  - aprendizaje
-  - decision-diseno
-  - php
-estado: vigente
-relacionado:
-  - "[[Decision - SQLite como base de datos]]"
-archivos:
-  - AGENTS.md
----
+#php
 
-# Decision - PHP puro sin frameworks
+# PHP puro sin frameworks
 
-## Problema que resuelve
+## Que entender
 
-Elegir la herramienta adecuada para construir un gestor personal de postulaciones.
+El proyecto usa PHP del servidor sin Laravel, Symfony ni similares. Las páginas en `public/` incluyen lógica de presentación; la lógica reutilizable vive en `app/`.
 
-## Decision tomada
+No hay router central, ORM ni capa MVC formal.
 
-Usar PHP puro, sin Laravel, Symfony ni ningun framework. La logica se organiza en archivos separados (`app/config.php`, `app/postulacion.php`) pero sin seguir un patron MVC impuesto por un framework.
+## Por que importa
 
-## Motivo
+Para un portafolio académico, el código debe ser legible de punta a punta. Un framework aporta convenciones útiles en proyectos grandes, pero aquí añadiría capas que dificultan explicar el flujo en una entrevista.
 
-El proyecto es academico y de portafolio. Usar un framework como Laravel agregaria:
-- Curva de aprendizaje (rutas, controladores, Eloquent, Blade, migraciones, etc.)
-- Archivos de configuracion que no se usarian
-- Dependencias externas que pueden fallar o quedar obsoletas
-- Tiempo de instalacion y configuracion que no aporta al aprendizaje del dominio
+## Como aparece aqui
 
-Con PHP puro, cada archivo hace algo especifico y se entiende sin necesidad de conocer las convenciones de un framework. Esto es valioso para un estudiante que quiere mostrar su codigo en una entrevista y explicarlo linea por linea.
+Estructura plana:
+- `public/index.php`, `registrar.php`, `editar.php` — puntos de entrada HTTP
+- `app/postulacion.php` — funciones de negocio y acceso a datos
+- `public/_header.php` y `_footer.php` — layout compartido con `require_once`
 
-## Alternativas consideradas
-
-1. **Laravel**: el framework PHP mas popular. Descartado porque su estructura opaca la logica simple del proyecto.
-2. **Slim**: micro-framework de rutas. Mas liviano que Laravel pero sigue agregando una capa de abstraccion innecesaria.
-3. **Sin framework (decision tomada)**: archivos PHP que reciben peticiones, procesan datos y devuelven HTML directamente.
-
-## Consecuencia
-
-- Las URLs son archivos `.php` concretos (`/registrar.php`, `/editar.php?id=1`)
-- No hay enrutador centralizado
-- El codigo es mas verboso pero mas explicito
-- Cualquier persona con PHP basico puede entender el proyecto sin leer documentacion del framework
+Validación en servidor, redirecciones con `header('Location: ...')`, HTML con Bootstrap por CDN.
 
 ## Que recordar
 
-- Elegir un framework no siempre es la mejor decision
-- Para proyectos pequenos y academicos, la simplicidad del codigo es mas importante que seguir tendencias
-- Esta decision esta alineada con la filosofia del proyecto documentada en `AGENTS.md`
+**Simplicidad deliberada: cada archivo tiene un rol claro y el flujo se sigue leyendo el código.**
 
 ## Relacionado
-
-- [[Decision - SQLite como base de datos]]
+- [[Concepto - PDO y SQLite en PHP]]
+- `AGENTS.md`
+- `public/`
+- `app/`

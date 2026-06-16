@@ -1,57 +1,32 @@
----
-tipo: decision
-proyecto: Gestor de Postulaciones
-tags:
-  - aprendizaje
-  - decision-diseno
-  - modelo-datos
-estado: vigente
-relacionado:
-  - "[[Decision - SQLite como base de datos]]"
-archivos:
-  - database/schema.sql
-  - docs/05_decisiones.md
----
+#php
 
-# Decision - Empresa es atributo de Postulacion
+# Empresa es atributo de Postulacion
 
-## Problema que resuelve
+## Que entender
 
-Como modelar la relacion entre una postulacion y la empresa que ofrece el puesto.
+**Empresa** no es una entidad con tabla propia. Es un campo de texto (`empresa`) dentro de `postulaciones`.
 
-## Decision tomada
+No hay tabla `empresas`, ni claves foráneas, ni CRUD separado de empresas.
 
-`empresa` es una columna de texto dentro de la tabla `postulaciones`, no una entidad independiente con su propia tabla.
+## Por que importa
 
-## Motivo
+El objetivo es trazabilidad personal de postulaciones, no un CRM. Modelar empresa como entidad añadiría joins, formularios y mantenimiento sin valor para un solo usuario.
 
-El sistema es un gestor personal, no un CRM empresarial. No necesitas mantener un catalogo de empresas con direccion, telefono, RUC, etc. Solo el nombre para identificar donde postulaste.
+En entrevista: demuestra que priorizas el dominio real (seguir postulaciones) sobre modelar todo como entidades.
 
-Crear una tabla `empresas` separada agregaria complejidad sin beneficio real:
-- JOIN en cada consulta
-- CRUD adicional
-- Validacion de duplicados
-- Mas archivos que mantener
+## Como aparece aqui
 
-Para el alcance del proyecto (una persona buscando practicas), un campo de texto es suficiente. Si el usuario escribe "Google" en dos postulaciones, se entiende que es la misma empresa por contexto.
+`database/schema.sql` tiene una sola tabla `postulaciones` con columna `empresa TEXT NOT NULL`.
 
-## Alternativas consideradas
+La búsqueda en `buscar_postulaciones()` filtra por coincidencia parcial en ese campo.
 
-1. **Tabla empresas separada**: la opcion clasica en sistemas multiusuario o CRM. Descartada por sobreingenieria.
-2. **Autocompletado desde valores existentes**: el dashboard lista plataformas unicas para el filtro, pero no se implemento para empresas porque no hay un caso de uso fuerte que lo justifique.
-
-## Consecuencia
-
-- Buscar postulaciones de una misma empresa requiere usar el buscador textual.
-- No hay normalizacion: si escribes "Google" en una y "Google Inc." en otra, el sistema no las relaciona.
-- La estructura de la base de datos es plana y facil de entender.
+Documentado en DEC-002 de `docs/05_decisiones.md`.
 
 ## Que recordar
 
-- No toda relacion debe ser una tabla separada
-- Para proyectos personales, prioriza la simplicidad sobre la normalizacion
-- DEC-002 en `docs/05_decisiones.md` formaliza esta regla
+**Una postulación = un registro completo; empresa es solo un dato más del mismo registro.**
 
 ## Relacionado
-
 - [[Decision - SQLite como base de datos]]
+- `docs/05_decisiones.md`
+- `docs/03_entidades.md`

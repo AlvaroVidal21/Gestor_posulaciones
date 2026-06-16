@@ -1,73 +1,32 @@
----
-tipo: regla_negocio
-proyecto: Gestor de Postulaciones
-tags:
-  - aprendizaje
-  - regla-negocio
-  - estados
-estado: vigente
-relacionado:
-  - "[[Conexion - CHECK constraint protege estados en SQLite]]"
-  - "[[Error - Contradiccion en regla de vencimiento]]"
-archivos:
-  - database/schema.sql
-  - docs/02_reglas_negocio.md
----
+#php
 
-# Regla - Estados validos de postulacion
+# Estados validos de postulacion
 
-## Regla de negocio
+## Que entender
 
-> Toda postulacion debe tener un estado valido. Los estados permitidos son: Postulado, Vencido y Rechazado.
+El dominio reconoce tres estados visibles:
+- **Postulado** — proceso activo, en seguimiento
+- **Rechazado** — cierre explícito por el usuario
+- **Vencido** — sin novedades tras 15 días (calculado)
 
-Sin embargo, "Vencido" **no se almacena** en la base de datos (ver [[Decision - Vencido se calcula no se almacena]]). En la practica, la columna `estado` de la tabla `postulaciones` solo acepta `'Postulado'` o `'Rechazado'`.
+Solo Postulado y Rechazado se pueden elegir al registrar o editar.
 
-## Implementacion
+## Por que importa
 
-A nivel de base de datos, en `database/schema.sql`:
+Los estados guían métricas del dashboard, filtros, colores de badge y la vista `vencidas.php`. Mezclar estado almacenado con estado mostrado genera bugs en conteos y filtros.
 
-```sql
-estado TEXT NOT NULL CHECK (estado IN ('Postulado', 'Rechazado'))
-```
+## Como aparece aqui
 
-La clausula `CHECK` en SQLite garantiza que ningun INSERT o UPDATE pueda escribir un valor no permitido. Si alguien intenta `UPDATE postulaciones SET estado = 'Invalido'`, SQLite lanza un error.
-
-A nivel de aplicacion, en `public/registrar.php` y `public/editar.php`:
-
-```php
-if (!in_array($datos['estado'], ['Postulado', 'Rechazado'], true)) {
-    $errores[] = 'El estado seleccionado no es valido.';
-}
-```
-
-La validacion en PHP es la primera barrera. El `CHECK` en SQLite es la segunda, por si el codigo PHP tiene un error o alguien modifica la base de datos directamente.
-
-## Por que es importante
-
-Los estados restringen el comportamiento del sistema. Si permitieras cualquier valor, la logica de vencimiento, las metricas del dashboard y los filtros dejarian de funcionar correctamente. Tener estados definidos y validados es lo que hace que el sistema sea predecible.
-
-## Ejemplo simple
-
-```
-INSERT INTO postulaciones (estado) VALUES ('Vencido');
--> SQLite rechaza la insercion porque 'Vencido' no esta en el CHECK
-
-INSERT INTO postulaciones (estado) VALUES ('Postulado');
--> Correcto, 'Postulado' esta permitido
-
-UPDATE postulaciones SET estado = 'Rechazado' WHERE id = 1;
--> Correcto, 'Rechazado' esta permitido
-```
+- Lista de estados: `docs/02_reglas_negocio.md` Regla 4
+- Validación en `public/editar.php`: `in_array($datos['estado'], ['Postulado', 'Rechazado'])`
+- Registro inicial siempre `Postulado` en `public/registrar.php`
+- `match()` en `public/index.php` asigna color Bootstrap por `estado_real`
 
 ## Que recordar
 
-- Hay 3 estados en el dominio pero solo 2 se almacenan en BD
-- El CHECK en SQLite protege contra datos invalidos a nivel de base de datos
-- La validacion en PHP protege contra datos invalidos a nivel de aplicacion
-- Las dos capas de validacion no son redundancia: son defensa en profundidad
+**Tres estados para el usuario; dos valores persistidos en BD.**
 
 ## Relacionado
-
-- [[Conexion - CHECK constraint protege estados en SQLite]]
 - [[Decision - Vencido se calcula no se almacena]]
-- [[Error - Contradiccion en regla de vencimiento]]
+- [[Regla - Vencimiento automatico a los 15 dias]]
+- [[Conexion - CHECK constraint protege estados en SQLite]]

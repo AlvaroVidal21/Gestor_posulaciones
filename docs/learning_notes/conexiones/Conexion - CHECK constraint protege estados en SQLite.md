@@ -1,32 +1,16 @@
----
-tipo: conexion
-proyecto: Gestor de Postulaciones
-tags:
-  - aprendizaje
-  - conexion
-  - sqlite
-  - validacion
-estado: vigente
-relacionado:
-  - "[[Regla - Estados validos de postulacion]]"
-  - "[[Concepto - PDO y SQLite en PHP]]"
-archivos:
-  - database/schema.sql
-  - public/registrar.php
-  - public/editar.php
----
+#sqlite
 
-# Conexion - CHECK constraint protege estados en SQLite
+# CHECK constraint protege estados en SQLite
 
-## Idea central
+## Que entender
 
-La base de datos tiene una restriccion que solo permite guardar `'Postulado'` o `'Rechazado'` en la columna `estado`. Esto actua como red de seguridad por si la validacion del codigo PHP falla.
+Un **CHECK constraint** rechaza filas que no cumplen una condición al INSERT o UPDATE. Aquí limita `estado` a valores permitidos en BD.
 
-## Regla o flujo de negocio
+## Por que importa
 
-Los estados validos de una postulacion son Postulado, Vencido y Rechazado. Pero Vencido no se almacena (se calcula). La BD solo debe aceptar los dos valores que realmente se persisten.
+Complementa la validación PHP: aunque un formulario malicioso envíe `Vencido` o basura, SQLite lanza error y no persiste el dato. Refuerza la decisión de que `Vencido` no es almacenable.
 
-## Representacion en el codigo
+## Como aparece aqui
 
 En `database/schema.sql`:
 
@@ -34,37 +18,15 @@ En `database/schema.sql`:
 estado TEXT NOT NULL CHECK (estado IN ('Postulado', 'Rechazado'))
 ```
 
-Esta linea le dice a SQLite: "cada vez que alguien intente insertar o actualizar esta columna, verifica que el valor este en la lista. Si no, rechaza la operacion".
+Si alguien intentara guardar `Vencido`, `PDOException` sería capturada en `public/editar.php` o `public/registrar.php`.
 
-Luego, en `public/registrar.php` y `public/editar.php`, el codigo PHP valida antes de enviar a la BD:
-
-```php
-if (!in_array($datos['estado'], ['Postulado', 'Rechazado'], true)) {
-    $errores[] = 'El estado seleccionado no es valido.';
-}
-```
-
-## Por que importa
-
-Son dos capas de defensa:
-
-```
-Entrada del usuario
-  -> PHP valida (si falla, muestra error al usuario)
-    -> SQLite CHECK valida (si falla, lanza excepcion PDO)
-```
-
-Si el PHP tuviera un bug o alguien modificara la base de datos directamente con SQL, el `CHECK` evita que datos invalidos entren al sistema. Es una practica de seguridad llamada **defense in depth** (defensa en profundidad).
+Encadena con [[Decision - Vencido se calcula no se almacena]]: la BD solo acepta lo que el usuario puede elegir.
 
 ## Que recordar
 
-- El `CHECK` en SQLite es una restriccion a nivel de tabla
-- Se define en el `CREATE TABLE` y se aplica automaticamente en cada INSERT/UPDATE
-- No necesita logica en PHP para funcionar (aunque el PHP tambien valida)
-- Si intentas insertar un estado no valido, SQLite lanza: `CHECK constraint failed: postulaciones`
-- La lista en el CHECK coincide exactamente con los valores que el PHP permite enviar
+**CHECK en esquema + validación en PHP = doble línea de defensa para estados.**
 
 ## Relacionado
-
+- [[Decision - Vencido se calcula no se almacena]]
 - [[Regla - Estados validos de postulacion]]
-- [[Concepto - PDO y SQLite en PHP]]
+- `database/schema.sql`

@@ -1,66 +1,32 @@
----
-tipo: regla_negocio
-proyecto: Gestor de Postulaciones
-tags:
-  - aprendizaje
-  - regla-negocio
-  - vencimiento
-estado: vigente
-relacionado:
-  - "[[Regla - Vencimiento automatico a los 15 dias]]"
-  - "[[Concepto - Estado calculado vs almacenado]]"
-archivos:
-  - app/postulacion.php
-  - public/editar.php
-  - docs/02_reglas_negocio.md
----
+#php
 
-# Regla - Postulacion vencida puede reactivarse
+# Postulacion vencida puede reactivarse
 
-## Regla de negocio
+## Que entender
 
-> Una postulacion en estado "Vencido" puede volver a estado "Postulado" si recibe una actualizacion posterior.
+"Vencido" no es un estado terminal como "Rechazado". Si el usuario edita una postulación vencida y guarda (típicamente dejando estado `Postulado`), el sistema renueva `fecha_ultima_actualizacion` y vuelve a mostrar `Postulado`.
 
-## Implementacion
+No hace falta un botón "reactivar": cualquier actualización válida reinicia el contador.
 
-Esta regla no necesita codigo explicito porque es consecuencia de como funciona el calculo de vencimiento.
+## Por que importa
 
-Cuando el usuario edita una postulacion desde `public/editar.php`, el formulario siempre establece `fecha_ultima_actualizacion` a la fecha actual (`date('Y-m-d')`). Al momento de leer la postulacion, la funcion `calcular_estado()` compara la nueva fecha con hoy. Si la diferencia es menor o igual a 15 dias, el estado real vuelve a ser "Postulado".
+Refleja la realidad del proceso de búsqueda: a veces retomas contacto con una empresa semanas después. La regla evita crear un cuarto estado o flujos especiales de "desarchivar".
 
-```
-Estado actual en BD: 'Postulado' (nunca cambio)
-fecha_ultima_actualizacion: 2026-05-01 (antigua)
-Estado real calculado: "Vencido" (pasaron mas de 15 dias)
+## Como aparece aqui
 
-Usuario edita la postulacion (ej: agrega una nota)
-fecha_ultima_actualizacion se actualiza a: 2026-06-11 (hoy)
+Regla 6 en `docs/02_reglas_negocio.md`.
 
-Ahora calcular_estado() ve que paso 0 dias
-Estado real calculado: "Postulado"
-```
+`actualizar_postulacion()` siempre escribe `fecha_ultima_actualizacion = date('Y-m-d')`.
 
-## Por que es importante
+`public/editar.php` muestra el `estado_real` actual y explica que al guardar se renueva la fecha.
 
-Completa el ciclo de vida de una postulacion: no es un estado terminal como "Rechazado". Una postulacion vencida puede reactivarse si el usuario decide darle seguimiento. Esto refleja la realidad de la busqueda laboral: a veces enviar un correo de seguimiento o actualizar el CV reactiva un proceso que parecia muerto.
-
-## Ejemplo simple
-
-```
-Postulacion a StartupXYZ -> se vence a los 15 dias
-Usuario la edita: agrega nota "Envie correo de seguimiento"
-fecha_ultima_actualizacion = hoy
-La postulacion vuelve a mostrarse como "Postulado"
-El contador de 15 dias se reinicia
-```
+Tras guardar, `calcular_estado()` ya no devuelve `Vencido` mientras no pasen otros 15 días.
 
 ## Que recordar
 
-- No hay codigo especial para esta regla, es un efecto secundario de como funciona `calcular_estado()`
-- El estado almacenado nunca cambia a "Vencido" (ver [[Decision - Vencido se calcula no se almacena]]), por lo que reactivar solo requiere modificar la fecha
-- Esta regla esta documentada como Regla 6 en `docs/02_reglas_negocio.md`
+**Editar = nueva señal de vida; el vencimiento se resetea con la fecha de hoy.**
 
 ## Relacionado
-
 - [[Regla - Vencimiento automatico a los 15 dias]]
-- [[Concepto - Estado calculado vs almacenado]]
 - [[Decision - Vencido se calcula no se almacena]]
+- `public/editar.php`

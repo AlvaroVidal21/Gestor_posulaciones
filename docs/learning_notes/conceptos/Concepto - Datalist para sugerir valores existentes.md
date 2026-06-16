@@ -1,56 +1,31 @@
----
-tipo: concepto
-proyecto: Gestor de Postulaciones
-tags:
-  - aprendizaje
-  - html
-  - usabilidad
-estado: vigente
-relacionado:
-  - "[[Decision - Empresa es atributo de Postulacion]]"
-  - "[[Decision - PHP puro sin frameworks]]"
-archivos:
-  - public/registrar.php
-  - public/editar.php
-  - app/postulacion.php
----
+#html
 
-# Concepto - Datalist para sugerir valores existentes
+# Datalist para sugerir valores existentes
 
-## Idea central
+## Que entender
 
-Un `<datalist>` permite que un campo de texto muestre sugerencias sin dejar de aceptar valores nuevos. En este proyecto se usa para `plataforma`: el usuario puede elegir una plataforma ya registrada o escribir una nueva.
+`<datalist>` es HTML nativo que ofrece sugerencias en un `<input type="text">` sin convertirlo en un `<select>` rígido. El usuario puede elegir una opción existente o escribir una nueva.
 
-## Problema que resuelve
+Se vincula con el atributo `list="id-del-datalist"` en el input.
 
-Antes, `plataforma` era solo texto libre. Eso funcionaba, pero obligaba a recordar como se habia escrito cada plataforma y facilitaba variantes por descuido, por ejemplo `LinkedIn`, `linkedin` o espacios extra.
+## Por que importa
 
-Crear una tabla `plataformas` con CRUD propio habria resuelto el problema, pero tambien agregaria una entidad que el sistema no necesita.
+Las plataformas (LinkedIn, Get on Board, etc.) se repiten pero no son un catálogo cerrado. Un select obligaría a mantener opciones fijas; un input libre generaría duplicados por typos. El datalist equilibra ambos.
 
-## Como aparece en este proyecto
+## Como aparece aqui
 
-En `app/postulacion.php`, `obtener_plataformas()` consulta las plataformas unicas existentes en las postulaciones. Los formularios `public/registrar.php` y `public/editar.php` usan esa lista dentro de un `<datalist>`.
+En `public/registrar.php` y `public/editar.php`:
+- PHP consulta plataformas distintas con `obtener_plataformas()`
+- Genera `<datalist id="lista-plataformas">` con `<option value="...">`
+- El input de plataforma usa `list="lista-plataformas"`
 
-El campo sigue siendo un `<input type="text">`, por eso conserva la libertad de escribir una plataforma nueva. La funcion `normalizar_plataforma()` limpia espacios extra antes de guardar.
-
-## Explicacion
-
-Este patron es un punto medio entre texto libre y catalogo cerrado:
-
-- texto libre: simple, pero propenso a variaciones
-- select cerrado: ordenado, pero impide registrar una plataforma nueva
-- datalist: sugiere valores existentes y permite nuevos
-
-Para un gestor personal, ese equilibrio mantiene la interfaz ligera sin crear pantallas administrativas innecesarias.
+`normalizar_plataforma()` en `app/postulacion.php` reduce variantes por espacios, no por mayúsculas.
 
 ## Que recordar
 
-- `datalist` mejora la usabilidad sin cambiar el modelo de datos
-- sirve cuando quieres sugerencias, no un catalogo obligatorio
-- encaja con la decision de mantener plataformas como atributo de `Postulacion`
-- normalizar espacios ayuda a reducir duplicados accidentales
+**Datalist = autocompletado sin perder la libertad de texto libre.**
 
 ## Relacionado
-
-- [[Decision - Empresa es atributo de Postulacion]]
-- [[Decision - PHP puro sin frameworks]]
+- `public/registrar.php`
+- `public/editar.php`
+- `app/postulacion.php`

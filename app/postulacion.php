@@ -214,7 +214,7 @@ function actualizar_postulacion(int $id, array $datos): bool {
         ':id' => $id,
         ':empresa' => $datos['empresa'],
         ':puesto' => $datos['puesto'],
-        ':plataforma' => $datos['plataforma'],
+        ':plataforma' => normalizar_plataforma($datos['plataforma']),
         ':url_oferta' => $datos['url_oferta'] ?: null,
         ':fecha_postulacion' => $datos['fecha_postulacion'],
         ':fecha_ultima_actualizacion' => date('Y-m-d'), // Siempre se actualiza a hoy
@@ -242,6 +242,55 @@ function eliminar_postulacion(int $id): bool {
  */
 function obtener_plataformas(): array {
     $pdo = obtener_conexion();
-    $stmt = $pdo->query('SELECT DISTINCT plataforma FROM postulaciones ORDER BY plataforma');
+    $stmt = $pdo->query("
+        SELECT DISTINCT TRIM(plataforma) AS plataforma
+        FROM postulaciones
+        WHERE TRIM(plataforma) <> ''
+        ORDER BY plataforma COLLATE NOCASE
+    ");
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
+}
+
+/**
+ * Normaliza el texto de plataforma para evitar variantes por espacios.
+ *
+ * No convierte el texto a minusculas porque el usuario puede preferir
+ * nombres como "LinkedIn" o "Get on Board".
+ *
+ * @param string $plataforma Texto ingresado por el usuario
+ * @return string Plataforma normalizada
+ */
+function normalizar_plataforma(string $plataforma): string {
+    $plataforma = trim($plataforma);
+    return preg_replace('/\s+/', ' ', $plataforma) ?? $plataforma;
+}
+
+/**
+ * Asigna un color Bootstrap estable a una plataforma.
+ *
+ * El color se calcula desde el nombre, por lo que una misma plataforma
+ * mantiene el mismo color sin crear una tabla adicional.
+ *
+ * @param string $plataforma Nombre de plataforma
+ * @return string Color Bootstrap para usar con text-bg-*
+ */
+function obtener_color_plataforma(string $plataforma): string {
+    $colores = [
+        'primary',
+        'success',
+        'danger',
+        'warning',
+        'info',
+        'dark',
+        'secondary',
+    ];
+
+    $plataforma_normalizada = strtolower(normalizar_plataforma($plataforma));
+
+    if ($plataforma_normalizada === '') {
+        return 'secondary';
+    }
+
+    $indice = (int) (sprintf('%u', crc32($plataforma_normalizada)) % count($colores));
+    return $colores[$indice];
 }

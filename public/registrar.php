@@ -15,7 +15,7 @@
  * La validación en PHP garantiza integridad de datos en la BD.
  */
 
-require_once __DIR__ . '/../app/config.php';
+require_once __DIR__ . '/../app/postulacion.php';
 
 // --- Procesar formulario si se envió por POST ---
 $errores = [];
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Recolectar y limpiar entradas
     $datos['empresa'] = trim($_POST['empresa'] ?? '');
     $datos['puesto'] = trim($_POST['puesto'] ?? '');
-    $datos['plataforma'] = trim($_POST['plataforma'] ?? '');
+    $datos['plataforma'] = normalizar_plataforma($_POST['plataforma'] ?? '');
     $datos['url_oferta'] = trim($_POST['url_oferta'] ?? '');
     $datos['fecha_postulacion'] = $_POST['fecha_postulacion'] ?? '';
     $datos['notas'] = trim($_POST['notas'] ?? '');
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([
                 ':empresa' => $datos['empresa'],
                 ':puesto' => $datos['puesto'],
-                ':plataforma' => $datos['plataforma'],
+                ':plataforma' => normalizar_plataforma($datos['plataforma']),
                 ':url_oferta' => $datos['url_oferta'] ?: null, // guarda null si está vacío
                 ':fecha_postulacion' => $datos['fecha_postulacion'],
                 ':fecha_ultima_actualizacion' => $datos['fecha_postulacion'], // inicialmente igual que fecha de postulación
@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // --- Mostrar formulario ---
+$plataformas = obtener_plataformas();
 $titulo = 'Nueva Postulación';
 require_once __DIR__ . '/_header.php';
 ?>
@@ -105,7 +106,13 @@ require_once __DIR__ . '/_header.php';
     <div class="col-md-4">
         <label for="plataforma" class="form-label">Plataforma <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="plataforma" name="plataforma"
-               value="<?= htmlspecialchars($datos['plataforma'] ?? '') ?>" required>
+               value="<?= htmlspecialchars($datos['plataforma'] ?? '') ?>"
+               list="lista-plataformas" required>
+        <datalist id="lista-plataformas">
+            <?php foreach ($plataformas as $plataforma): ?>
+                <option value="<?= htmlspecialchars($plataforma) ?>"></option>
+            <?php endforeach; ?>
+        </datalist>
     </div>
 
     <div class="col-md-4">

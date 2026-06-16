@@ -143,7 +143,7 @@ require_once __DIR__ . '/_header.php';
                 <ul class="list-group list-group-flush">
                     <?php foreach ($metricas['por_plataforma'] as $plataforma => $cantidad): ?>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <?= htmlspecialchars($plataforma) ?>
+                            <?= badge_plataforma_html($plataforma) ?>
                             <span class="badge bg-primary rounded-pill"><?= $cantidad ?></span>
                         </li>
                     <?php endforeach; ?>
@@ -269,7 +269,7 @@ function resultados_html(array $postulaciones, array $criterios): void {
             <?php endif; ?>
         </div>
     <?php else: ?>
-        <div class="table-responsive">
+        <div class="d-none d-md-block">
             <table class="table table-striped table-hover">
                 <thead class="table-dark">
                     <tr>
@@ -294,7 +294,7 @@ function resultados_html(array $postulaciones, array $criterios): void {
                         <tr>
                             <td><?= htmlspecialchars($p['empresa']) ?></td>
                             <td><?= htmlspecialchars($p['puesto']) ?></td>
-                            <td><?= htmlspecialchars($p['plataforma']) ?></td>
+                            <td><?= badge_plataforma_html($p['plataforma']) ?></td>
                             <td><?= htmlspecialchars($p['fecha_postulacion']) ?></td>
                             <td><span class="badge bg-<?= $badge_color ?>"><?= $p['estado_real'] ?></span></td>
                             <td>
@@ -306,5 +306,58 @@ function resultados_html(array $postulaciones, array $criterios): void {
                 </tbody>
             </table>
         </div>
+
+        <div class="resultados-tarjetas d-md-none">
+            <?php foreach ($postulaciones as $p):
+                $badge_color = match ($p['estado_real']) {
+                    'Postulado' => 'success',
+                    'Vencido' => 'warning',
+                    'Rechazado' => 'danger',
+                    default => 'secondary',
+                };
+            ?>
+                <article class="postulacion-card">
+                    <div class="postulacion-card__encabezado">
+                        <h2 class="postulacion-card__titulo"><?= htmlspecialchars($p['empresa']) ?></h2>
+                        <p class="postulacion-card__puesto"><?= htmlspecialchars($p['puesto']) ?></p>
+                    </div>
+
+                    <div class="postulacion-card__datos">
+                        <div class="postulacion-card__fila">
+                            <span class="postulacion-card__etiqueta">Plataforma</span>
+                            <span class="postulacion-card__valor"><?= badge_plataforma_html($p['plataforma']) ?></span>
+                        </div>
+                        <div class="postulacion-card__fila">
+                            <span class="postulacion-card__etiqueta">Fecha</span>
+                            <span class="postulacion-card__valor"><?= htmlspecialchars($p['fecha_postulacion']) ?></span>
+                        </div>
+                        <div class="postulacion-card__fila">
+                            <span class="postulacion-card__etiqueta">Estado</span>
+                            <span class="postulacion-card__valor">
+                                <span class="badge bg-<?= $badge_color ?>"><?= $p['estado_real'] ?></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="postulacion-card__acciones">
+                        <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary w-100">Editar</a>
+                        <a href="eliminar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-danger w-100">Eliminar</a>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        </div>
     <?php endif;
+}
+
+/**
+ * Renderiza un badge visual para plataforma.
+ *
+ * @param string $plataforma Nombre de plataforma
+ * @return string HTML seguro del badge
+ */
+function badge_plataforma_html(string $plataforma): string {
+    $color = obtener_color_plataforma($plataforma);
+    return '<span class="badge plataforma-badge text-bg-' . htmlspecialchars($color) . '">'
+        . htmlspecialchars($plataforma)
+        . '</span>';
 }

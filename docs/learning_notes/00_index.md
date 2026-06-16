@@ -13,6 +13,7 @@ estado: vigente
 ## Mapa principal
 - [[Concepto - Estado calculado vs almacenado]]
 - [[Concepto - AJAX con fetch para busqueda en tiempo real]]
+- [[Concepto - Datalist para sugerir valores existentes]]
 - [[Concepto - PDO y SQLite en PHP]]
 - [[Decision - Vencido se calcula no se almacena]]
 - [[Decision - Empresa es atributo de Postulacion]]
@@ -49,6 +50,8 @@ estado: vigente
   - relacionado con: [[Decision - Vencido se calcula no se almacena]], [[Conexion - Regla de vencimiento en PHP y Python]]
 - [[Concepto - AJAX con fetch para busqueda en tiempo real]]
   - relacionado con: [[Decision - PHP puro sin frameworks]]
+- [[Concepto - Datalist para sugerir valores existentes]]
+  - relacionado con: [[Decision - Empresa es atributo de Postulacion]], [[Decision - PHP puro sin frameworks]]
 - [[Concepto - PDO y SQLite en PHP]]
   - relacionado con: [[Decision - SQLite como base de datos]]
 
@@ -66,9 +69,13 @@ estado: vigente
 
 ## Archivos clave del proyecto
 - `app/postulacion.php`
-  - notas relacionadas: [[Concepto - Estado calculado vs almacenado]], [[Regla - Vencimiento automatico a los 15 dias]], [[Conexion - Regla de vencimiento en PHP y Python]]
+  - notas relacionadas: [[Concepto - Estado calculado vs almacenado]], [[Regla - Vencimiento automatico a los 15 dias]], [[Conexion - Regla de vencimiento en PHP y Python]], [[Concepto - Datalist para sugerir valores existentes]]
 - `public/index.php`
   - notas relacionadas: [[Concepto - AJAX con fetch para busqueda en tiempo real]]
+- `public/registrar.php`
+  - notas relacionadas: [[Concepto - Datalist para sugerir valores existentes]]
+- `public/editar.php`
+  - notas relacionadas: [[Concepto - Datalist para sugerir valores existentes]]
 - `app/config.php`
   - notas relacionadas: [[Concepto - PDO y SQLite en PHP]], [[Decision - SQLite como base de datos]]
 - `database/schema.sql`

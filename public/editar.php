@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $datos = [
         'empresa' => trim($_POST['empresa'] ?? ''),
         'puesto' => trim($_POST['puesto'] ?? ''),
-        'plataforma' => trim($_POST['plataforma'] ?? ''),
+        'plataforma' => normalizar_plataforma($_POST['plataforma'] ?? ''),
         'url_oferta' => trim($_POST['url_oferta'] ?? ''),
         'fecha_postulacion' => $_POST['fecha_postulacion'] ?? '',
         'estado' => $_POST['estado'] ?? '',
@@ -67,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $datos = $postulacion;
 }
 
+$plataformas = obtener_plataformas();
 $titulo = 'Editar Postulación';
 require_once __DIR__ . '/_header.php';
 ?>
@@ -105,7 +106,13 @@ require_once __DIR__ . '/_header.php';
     <div class="col-md-4">
         <label for="plataforma" class="form-label">Plataforma <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="plataforma" name="plataforma"
-               value="<?= htmlspecialchars($datos['plataforma']) ?>" required>
+               value="<?= htmlspecialchars($datos['plataforma']) ?>"
+               list="lista-plataformas" required>
+        <datalist id="lista-plataformas">
+            <?php foreach ($plataformas as $plataforma): ?>
+                <option value="<?= htmlspecialchars($plataforma) ?>"></option>
+            <?php endforeach; ?>
+        </datalist>
     </div>
 
     <div class="col-md-4">

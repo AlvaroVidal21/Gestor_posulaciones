@@ -1,0 +1,94 @@
+.navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+}
+
+.navbar-nav .nav-link.active {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.plataforma-badge {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+    line-height: 1.25;
+    text-align: left;
+}
+
+.resultados-tarjetas {
+    display: grid;
+    gap: 1rem;
+}
+
+.postulacion-card {
+    border: 1px solid rgba(0, 0, 0, .12);
+    border-radius: .5rem;
+    padding: 1rem;
+    background: #fff;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .06);
+}
+
+.postulacion-card__encabezado {
+    margin-bottom: .75rem;
+}
+
+.postulacion-card__titulo {
+    margin-bottom: .25rem;
+    font-size: 1.05rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.postulacion-card__puesto {
+    margin-bottom: 0;
+    color: #6c757d;
+    overflow-wrap: anywhere;
+}
+
+.postulacion-card__datos {
+    display: grid;
+    gap: .5rem;
+    margin-bottom: 1rem;
+}
+
+.postulacion-card__fila {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: .5rem;
+    border-top: 1px solid rgba(0, 0, 0, .08);
+}
+
+.postulacion-card__etiqueta {
+    flex: 0 0 auto;
+    color: #6c757d;
+    font-size: .85rem;
+}
+
+.postulacion-card__valor {
+    min-width: 0;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.postulacion-card__acciones {
+    display: grid;
+    gap: .5rem;
+}
+
+@media (min-width: 576px) {
+    .postulacion-card__acciones {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar-nav .nav-item {
+        margin-left: .5rem;
+    }
+
+    .table .plataforma-badge {
+        white-space: nowrap;
+    }
+}

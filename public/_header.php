@@ -4,21 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestor de Postulaciones</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .navbar {
-            box-shadow: 0 2px 8px rgba(0,0,0,.15);
-        }
-
-        /* Espaciado entre enlaces de navegación */
-        .navbar-nav .nav-item {
-            margin-left: .5rem;
-        }
-        .navbar-nav .nav-link.active {
-            text-decoration: underline;
-            text-underline-offset: 4px;
-        }
-    </style>
+    <link href="assets/css/app.css" rel="stylesheet">
 </head>
 <body>
     <?php

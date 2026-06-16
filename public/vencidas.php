@@ -32,7 +32,7 @@ require_once __DIR__ . '/_header.php';
         No hay postulaciones vencidas. ¡Buen trabajo!
     </div>
 <?php else: ?>
-    <div class="table-responsive">
+    <div class="d-none d-md-block">
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
@@ -53,7 +53,7 @@ require_once __DIR__ . '/_header.php';
                     <tr>
                         <td><?= htmlspecialchars($p['empresa']) ?></td>
                         <td><?= htmlspecialchars($p['puesto']) ?></td>
-                        <td><?= htmlspecialchars($p['plataforma']) ?></td>
+                        <td><?= badge_plataforma_html($p['plataforma']) ?></td>
                         <td><?= htmlspecialchars($p['fecha_ultima_actualizacion']) ?></td>
                         <td><span class="badge bg-warning"><?= $dias ?> días</span></td>
                         <td>
@@ -66,6 +66,44 @@ require_once __DIR__ . '/_header.php';
             </tbody>
         </table>
     </div>
+
+    <div class="resultados-tarjetas d-md-none">
+        <?php foreach ($postulaciones as $p): ?>
+            <?php
+                $fecha_act = new DateTime($p['fecha_ultima_actualizacion']);
+                $dias = $fecha_act->diff(new DateTime())->days;
+            ?>
+            <article class="postulacion-card">
+                <div class="postulacion-card__encabezado">
+                    <h2 class="postulacion-card__titulo"><?= htmlspecialchars($p['empresa']) ?></h2>
+                    <p class="postulacion-card__puesto"><?= htmlspecialchars($p['puesto']) ?></p>
+                </div>
+
+                <div class="postulacion-card__datos">
+                    <div class="postulacion-card__fila">
+                        <span class="postulacion-card__etiqueta">Plataforma</span>
+                        <span class="postulacion-card__valor"><?= badge_plataforma_html($p['plataforma']) ?></span>
+                    </div>
+                    <div class="postulacion-card__fila">
+                        <span class="postulacion-card__etiqueta">Última actualización</span>
+                        <span class="postulacion-card__valor"><?= htmlspecialchars($p['fecha_ultima_actualizacion']) ?></span>
+                    </div>
+                    <div class="postulacion-card__fila">
+                        <span class="postulacion-card__etiqueta">Sin actualizar</span>
+                        <span class="postulacion-card__valor">
+                            <span class="badge bg-warning"><?= $dias ?> días</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="postulacion-card__acciones">
+                    <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary w-100">
+                        Actualizar
+                    </a>
+                </div>
+            </article>
+        <?php endforeach; ?>
+    </div>
 <?php endif; ?>
 
 <div class="mt-3">
@@ -73,3 +111,18 @@ require_once __DIR__ . '/_header.php';
 </div>
 
 <?php require_once __DIR__ . '/_footer.php'; ?>
+
+<?php
+/**
+ * Renderiza un badge visual para plataforma.
+ *
+ * @param string $plataforma Nombre de plataforma
+ * @return string HTML seguro del badge
+ */
+function badge_plataforma_html(string $plataforma): string {
+    $color = obtener_color_plataforma($plataforma);
+    return '<span class="badge plataforma-badge text-bg-' . htmlspecialchars($color) . '">'
+        . htmlspecialchars($plataforma)
+        . '</span>';
+}
+?>

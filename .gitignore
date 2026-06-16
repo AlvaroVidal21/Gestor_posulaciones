@@ -8,6 +8,14 @@ database/*.sqlite-wal
 *.sqlite-shm
 *.sqlite-wal
 
+# IA, agentes y órdenes (config local; no versionar)
+AGENTS.md
+AGENTE_LEARNING_NOTES.md
+.agents/
+.kiro/
+skills-lock.json
+.cursor/
+
 # Repomix (volcado de contexto para agentes; se regenera)
 repomix-output.*
 .repomix/
@@ -45,4 +53,3 @@ desktop.ini
 *.swo
 *.sublime-project
 *.sublime-workspace
-.cursor/

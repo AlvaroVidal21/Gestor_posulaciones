@@ -294,3 +294,36 @@ function obtener_color_plataforma(string $plataforma): string {
     $indice = (int) (sprintf('%u', crc32($plataforma_normalizada)) % count($colores));
     return $colores[$indice];
 }
+
+/**
+ * Convierte una fecha ISO a un formato breve y legible para interfaz.
+ *
+ * @param string $fecha Fecha en formato YYYY-MM-DD
+ * @return string Fecha formateada como "16 jun 2026"
+ */
+function formatear_fecha_corta(string $fecha): string {
+    $fecha_objeto = DateTime::createFromFormat('Y-m-d', $fecha);
+
+    if (!$fecha_objeto) {
+        return $fecha;
+    }
+
+    $meses = [
+        1 => 'ene',
+        2 => 'feb',
+        3 => 'mar',
+        4 => 'abr',
+        5 => 'may',
+        6 => 'jun',
+        7 => 'jul',
+        8 => 'ago',
+        9 => 'sep',
+        10 => 'oct',
+        11 => 'nov',
+        12 => 'dic',
+    ];
+
+    $mes = $meses[(int) $fecha_objeto->format('n')] ?? $fecha_objeto->format('m');
+
+    return $fecha_objeto->format('d') . ' ' . $mes . ' ' . $fecha_objeto->format('Y');
+}

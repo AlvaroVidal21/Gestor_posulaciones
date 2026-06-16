@@ -295,11 +295,11 @@ function resultados_html(array $postulaciones, array $criterios): void {
                             <td><?= htmlspecialchars($p['empresa']) ?></td>
                             <td><?= htmlspecialchars($p['puesto']) ?></td>
                             <td><?= badge_plataforma_html($p['plataforma']) ?></td>
-                            <td><?= htmlspecialchars($p['fecha_postulacion']) ?></td>
+                            <td><span class="fecha-legible"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_postulacion'])) ?></span></td>
                             <td><span class="badge bg-<?= $badge_color ?>"><?= $p['estado_real'] ?></span></td>
                             <td>
-                                <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary">Editar</a>
-                                <a href="eliminar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary">Edit.</a>
+                                <a href="eliminar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-danger">Elim.</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -329,7 +329,7 @@ function resultados_html(array $postulaciones, array $criterios): void {
                         </div>
                         <div class="postulacion-card__fila">
                             <span class="postulacion-card__etiqueta">Fecha</span>
-                            <span class="postulacion-card__valor"><?= htmlspecialchars($p['fecha_postulacion']) ?></span>
+                            <span class="postulacion-card__valor fecha-legible"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_postulacion'])) ?></span>
                         </div>
                         <div class="postulacion-card__fila">
                             <span class="postulacion-card__etiqueta">Estado</span>
@@ -340,8 +340,8 @@ function resultados_html(array $postulaciones, array $criterios): void {
                     </div>
 
                     <div class="postulacion-card__acciones">
-                        <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary w-100">Editar</a>
-                        <a href="eliminar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-danger w-100">Eliminar</a>
+                        <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary w-100">Edit.</a>
+                        <a href="eliminar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-danger w-100">Elim.</a>
                     </div>
                 </article>
             <?php endforeach; ?>

@@ -1,22 +1,48 @@
-# Base de datos SQLite (se crea al ejecutar database/init.php)
+# Gestor de Postulaciones — archivos generados y locales
+
+# Base de datos SQLite (se crea con database/init.php)
+database/*.sqlite
+database/*.sqlite-shm
+database/*.sqlite-wal
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
 
-# Python
+# Repomix (volcado de contexto para agentes; se regenera)
+repomix-output.*
+.repomix/
+
+# Python (scripts/analytics.py)
 __pycache__/
+*.py[cod]
+*$py.class
 .venv/
+venv/
+.python-version
 uv.lock
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# PHP
+.phpunit.result.cache
+
+# Logs y temporales
+*.log
+*.tmp
+*.temp
+*~
 
 # Sistema operativo
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Editor
+# Editores e IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# Logs
-*.log
+*.sublime-project
+*.sublime-workspace
+.cursor/

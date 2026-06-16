@@ -57,8 +57,9 @@ require_once __DIR__ . '/_header.php';
                         <td><span class="fecha-legible"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_ultima_actualizacion'])) ?></span></td>
                         <td><span class="badge bg-warning"><?= $dias ?> días</span></td>
                         <td>
-                            <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary">
-                                Actualizar
+                            <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-action btn-action-edit btn-action-text">
+                                <span aria-hidden="true">✎</span>
+                                <span>Actualizar</span>
                             </a>
                         </td>
                     </tr>
@@ -97,8 +98,9 @@ require_once __DIR__ . '/_header.php';
                 </div>
 
                 <div class="postulacion-card__acciones">
-                    <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary w-100">
-                        Actualizar
+                    <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-action btn-action-edit btn-action-text w-100">
+                        <span aria-hidden="true">✎</span>
+                        <span>Actualizar</span>
                     </a>
                 </div>
             </article>

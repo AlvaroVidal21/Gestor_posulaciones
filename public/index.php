@@ -298,8 +298,16 @@ function resultados_html(array $postulaciones, array $criterios): void {
                             <td><span class="fecha-legible"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_postulacion'])) ?></span></td>
                             <td><span class="badge bg-<?= $badge_color ?>"><?= $p['estado_real'] ?></span></td>
                             <td>
-                                <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary">Edit.</a>
-                                <a href="eliminar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-danger">Elim.</a>
+                                <div class="acciones-inline">
+                                    <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-action btn-action-edit" aria-label="Editar" title="Editar">
+                                        <span aria-hidden="true">✎</span>
+                                        <span class="visually-hidden">Editar</span>
+                                    </a>
+                                    <a href="eliminar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-action btn-action-delete" aria-label="Eliminar" title="Eliminar">
+                                        <span aria-hidden="true">×</span>
+                                        <span class="visually-hidden">Eliminar</span>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -340,8 +348,14 @@ function resultados_html(array $postulaciones, array $criterios): void {
                     </div>
 
                     <div class="postulacion-card__acciones">
-                        <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-primary w-100">Edit.</a>
-                        <a href="eliminar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-outline-danger w-100">Elim.</a>
+                        <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-action btn-action-edit btn-action-text w-100">
+                            <span aria-hidden="true">✎</span>
+                            <span>Editar</span>
+                        </a>
+                        <a href="eliminar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-action btn-action-delete btn-action-text w-100">
+                            <span aria-hidden="true">×</span>
+                            <span>Eliminar</span>
+                        </a>
                     </div>
                 </article>
             <?php endforeach; ?>

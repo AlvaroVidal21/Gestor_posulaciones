@@ -1,3 +1,54 @@
+:root {
+    --fuente-ui: "Noto Sans", "Liberation Sans", "Segoe UI", sans-serif;
+    --fuente-dato: "Noto Sans", "Liberation Sans", "Segoe UI", sans-serif;
+}
+
+body {
+    font-family: var(--fuente-ui);
+    color: #212529;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.navbar-brand {
+    font-family: var(--fuente-ui);
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+h1 {
+    font-size: 2rem;
+    line-height: 1.15;
+}
+
+.form-control,
+.form-select,
+.btn,
+.table,
+.badge {
+    font-family: var(--fuente-ui);
+}
+
+.table {
+    font-size: .94rem;
+    line-height: 1.45;
+}
+
+.table th {
+    font-weight: 700;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
 .navbar {
     box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
 }
@@ -13,6 +64,8 @@
     overflow-wrap: break-word;
     line-height: 1.25;
     text-align: left;
+    font-size: .75rem;
+    font-weight: 700;
 }
 
 .resultados-tarjetas {
@@ -34,7 +87,8 @@
 
 .postulacion-card__titulo {
     margin-bottom: .25rem;
-    font-size: 1.05rem;
+    font-size: 1rem;
+    font-weight: 700;
     line-height: 1.25;
     overflow-wrap: anywhere;
 }
@@ -42,6 +96,8 @@
 .postulacion-card__puesto {
     margin-bottom: 0;
     color: #6c757d;
+    font-size: .95rem;
+    line-height: 1.4;
     overflow-wrap: anywhere;
 }
 
@@ -63,7 +119,8 @@
 .postulacion-card__etiqueta {
     flex: 0 0 auto;
     color: #6c757d;
-    font-size: .85rem;
+    font-size: .82rem;
+    font-weight: 600;
 }
 
 .postulacion-card__valor {
@@ -144,6 +201,7 @@
     border-radius: 999px;
     background: #eef2f6;
     color: #495057;
+    font-family: var(--fuente-dato);
     font-size: .82rem;
     font-weight: 600;
     line-height: 1;

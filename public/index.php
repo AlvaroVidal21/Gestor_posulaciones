@@ -295,7 +295,7 @@ function resultados_html(array $postulaciones, array $criterios): void {
                             <td><?= htmlspecialchars($p['empresa']) ?></td>
                             <td><?= htmlspecialchars($p['puesto']) ?></td>
                             <td><?= badge_plataforma_html($p['plataforma']) ?></td>
-                            <td><span class="fecha-legible"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_postulacion'])) ?></span></td>
+                            <td><span class="fecha-chip"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_postulacion'])) ?></span></td>
                             <td><span class="badge bg-<?= $badge_color ?>"><?= $p['estado_real'] ?></span></td>
                             <td>
                                 <div class="acciones-inline">
@@ -337,7 +337,7 @@ function resultados_html(array $postulaciones, array $criterios): void {
                         </div>
                         <div class="postulacion-card__fila">
                             <span class="postulacion-card__etiqueta">Fecha</span>
-                            <span class="postulacion-card__valor fecha-legible"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_postulacion'])) ?></span>
+                            <span class="postulacion-card__valor"><span class="fecha-chip"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_postulacion'])) ?></span></span>
                         </div>
                         <div class="postulacion-card__fila">
                             <span class="postulacion-card__etiqueta">Estado</span>

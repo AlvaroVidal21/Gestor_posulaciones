@@ -54,7 +54,7 @@ require_once __DIR__ . '/_header.php';
                         <td><?= htmlspecialchars($p['empresa']) ?></td>
                         <td><?= htmlspecialchars($p['puesto']) ?></td>
                         <td><?= badge_plataforma_html($p['plataforma']) ?></td>
-                        <td><span class="fecha-legible"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_ultima_actualizacion'])) ?></span></td>
+                        <td><span class="fecha-chip"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_ultima_actualizacion'])) ?></span></td>
                         <td><span class="badge bg-warning"><?= $dias ?> días</span></td>
                         <td>
                             <a href="editar.php?id=<?= $p['id'] ?>" class="btn btn-sm btn-action btn-action-edit btn-action-text">
@@ -87,7 +87,7 @@ require_once __DIR__ . '/_header.php';
                     </div>
                     <div class="postulacion-card__fila">
                         <span class="postulacion-card__etiqueta">Última actualización</span>
-                        <span class="postulacion-card__valor fecha-legible"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_ultima_actualizacion'])) ?></span>
+                        <span class="postulacion-card__valor"><span class="fecha-chip"><?= htmlspecialchars(formatear_fecha_corta($p['fecha_ultima_actualizacion'])) ?></span></span>
                     </div>
                     <div class="postulacion-card__fila">
                         <span class="postulacion-card__etiqueta">Sin actualizar</span>

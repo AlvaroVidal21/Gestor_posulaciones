@@ -7,7 +7,7 @@
 El dominio reconoce tres estados visibles:
 - **Postulado** — proceso activo, en seguimiento
 - **Rechazado** — cierre explícito por el usuario
-- **Vencido** — sin novedades tras 15 días (calculado)
+- **Vencido** — sin novedades tras 7 días (calculado)
 
 Solo Postulado y Rechazado se pueden elegir al registrar o editar.
 
@@ -28,5 +28,5 @@ Los estados guían métricas del dashboard, filtros, colores de badge y la vista
 
 ## Relacionado
 - [[Decision - Vencido se calcula no se almacena]]
-- [[Regla - Vencimiento automatico a los 15 dias]]
+- [[Regla - Vencimiento automatico a los 7 dias]]
 - [[Conexion - CHECK constraint protege estados en SQLite]]

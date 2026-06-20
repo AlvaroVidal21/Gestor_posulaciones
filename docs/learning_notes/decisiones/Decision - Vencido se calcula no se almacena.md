@@ -4,7 +4,7 @@
 
 ## Que entender
 
-La columna `estado` en BD solo guarda `Postulado` o `Rechazado`. Cuando una postulación lleva más de 15 días sin actualizarse, el sistema **muestra** `Vencido` pero **no escribe** ese valor en la tabla.
+La columna `estado` en BD solo guarda `Postulado` o `Rechazado`. Cuando una postulación lleva más de 7 días sin actualizarse, el sistema **muestra** `Vencido` pero **no escribe** ese valor en la tabla.
 
 DEC-003 formaliza esta decisión.
 
@@ -27,6 +27,6 @@ Calcularlo garantiza coherencia en cada lectura, a costa de duplicar la regla en
 
 ## Relacionado
 - [[Concepto - Estado calculado vs almacenado]]
-- [[Regla - Vencimiento automatico a los 15 dias]]
+- [[Regla - Vencimiento automatico a los 7 dias]]
 - [[Conexion - CHECK constraint protege estados en SQLite]]
 - `docs/05_decisiones.md`

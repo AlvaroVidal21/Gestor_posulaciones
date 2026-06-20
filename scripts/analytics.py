@@ -30,7 +30,7 @@ from rich.panel import Panel
 from rich.table import Table
 
 RUTA_BD = Path(__file__).resolve().parent.parent / "database" / "gestor_postulaciones.sqlite"
-DIAS_VENCIMIENTO = 15
+DIAS_VENCIMIENTO = 7
 
 
 def conectar_bd() -> pd.DataFrame:
@@ -50,7 +50,7 @@ def calcular_estado_real(df: pd.DataFrame) -> pd.DataFrame:
     """
     Replica la regla de negocio de Vencido (docs/02_reglas_negocio.md).
 
-    Si han pasado más de 15 días desde fecha_ultima_actualizacion
+    Si han pasado más de 7 días desde fecha_ultima_actualizacion
     y el estado almacenado es "Postulado", el estado real es "Vencido".
     """
     df = df.copy()

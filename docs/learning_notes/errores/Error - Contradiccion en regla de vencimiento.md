@@ -5,8 +5,8 @@
 ## Que entender
 
 En `docs/02_reglas_negocio.md` coexisten dos redacciones distintas:
-- **Regla 1** habla de "15 días desde la **fecha de postulación**"
-- **Regla 5** habla de "15 días desde su **última actualización**"
+- **Regla 1** habla de "7 días desde la **fecha de postulación**"
+- **Regla 5** habla de "7 días desde su **última actualización**"
 
 El código implementa la segunda: usa `fecha_ultima_actualizacion` en `calcular_estado()`.
 
@@ -26,6 +26,6 @@ Documentación y código desalineados confunden al releer el proyecto y pueden g
 **Fuente de verdad operativa: `fecha_ultima_actualizacion`. Regla 1 en docs está desactualizada.**
 
 ## Relacionado
-- [[Regla - Vencimiento automatico a los 15 dias]]
+- [[Regla - Vencimiento automatico a los 7 dias]]
 - [[Conexion - Regla de vencimiento en PHP y Python]]
 - `docs/02_reglas_negocio.md`

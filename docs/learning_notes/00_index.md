@@ -17,7 +17,7 @@
 
 ### Reglas de negocio
 - [[Regla - Estados validos de postulacion]]
-- [[Regla - Vencimiento automatico a los 15 dias]]
+- [[Regla - Vencimiento automatico a los 7 dias]]
 - [[Regla - Postulacion vencida puede reactivarse]]
 
 ### Errores
@@ -30,7 +30,7 @@
 - [[Conexion - Color de plataforma sin tabla extra]]
 
 ## Archivos clave
-- `app/postulacion.php` -> [[Concepto - Estado calculado vs almacenado]], [[Regla - Vencimiento automatico a los 15 dias]]
+- `app/postulacion.php` -> [[Concepto - Estado calculado vs almacenado]], [[Regla - Vencimiento automatico a los 7 dias]]
 - `app/config.php` -> [[Concepto - PDO y SQLite en PHP]], [[Decision - SQLite como base de datos]]
 - `database/schema.sql` -> [[Conexion - CHECK constraint protege estados en SQLite]], [[Decision - Vencido se calcula no se almacena]]
 - `public/index.php` -> [[Concepto - AJAX con fetch para busqueda en tiempo real]], [[Conexion - Estado calculado obliga filtrar en PHP]]

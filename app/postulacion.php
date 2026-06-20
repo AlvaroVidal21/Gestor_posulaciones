@@ -10,7 +10,7 @@
  * Sobre el estado "Vencido" (ver DEC-003 en docs/05_decisiones.md):
  * No se almacena en BD. Se calcula en cada consulta según la regla:
  *   - Si estado almacenado es "Rechazado" → se muestra "Rechazado"
- *   - Si estado almacenado es "Postulado" y pasaron >15 días desde
+ *   - Si estado almacenado es "Postulado" y pasaron >7 días desde
  *     fecha_ultima_actualizacion → se muestra "Vencido"
  *   - En cualquier otro caso → se muestra "Postulado"
  */
@@ -58,7 +58,7 @@ function obtener_por_id(int $id): ?array {
  * Calcula el estado real de una postulación aplicando la regla de vencimiento.
  *
  * Regla de negocio (docs/02_reglas_negocio.md):
- * - Si han pasado más de 15 días desde fecha_ultima_actualizacion
+ * - Si han pasado más de 7 días desde fecha_ultima_actualizacion
  *   y el estado almacenado es "Postulado", el estado real es "Vencido".
  * - Si el estado almacenado es "Rechazado", se respeta.
  * - Si se actualiza una postulación vencida, vuelve a "Postulado"
@@ -77,7 +77,7 @@ function calcular_estado(array $postulacion): string {
         $hoy = new DateTime();
         $diferencia = $fecha_actualizacion->diff($hoy)->days;
 
-        if ($diferencia > 15) {
+        if ($diferencia > 7) {
             return 'Vencido';
         }
     }
@@ -187,7 +187,7 @@ function buscar_postulaciones(array $criterios = []): array {
  *
  * Regla 6 (docs/02_reglas_negocio.md):
  * Si la postulación estaba "Vencido" y se actualiza con estado "Postulado",
- * vuelve a estado activo porque se reinicia el contador de 15 días
+ * vuelve a estado activo porque se reinicia el contador de 7 días
  * al modificar fecha_ultima_actualizacion.
  *
  * @param int   $id    ID de la postulación

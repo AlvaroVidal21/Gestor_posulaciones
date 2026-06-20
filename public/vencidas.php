@@ -23,7 +23,7 @@ require_once __DIR__ . '/_header.php';
 <h1 class="mb-4">Postulaciones Vencidas</h1>
 
 <p class="text-muted">
-    Postulaciones que superaron los 15 días sin actualización desde
+    Postulaciones que superaron los 7 días sin actualización desde
     su última modificación y necesitan seguimiento.
 </p>
 

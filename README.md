@@ -21,7 +21,7 @@ Mantener trazabilidad de las postulaciones laborales para evitar que la informac
 - Búsqueda textual sobre empresa, puesto y plataforma
 - Filtros combinables por estado y plataforma
 - Editar y eliminar postulaciones
-- Cálculo automático de postulaciones vencidas (+15 días sin actualización)
+- Cálculo automático de postulaciones vencidas (+7 días sin actualización)
 - Vista dedicada a postulaciones vencidas
 
 ## Requisitos
@@ -74,7 +74,7 @@ docs/           Documentación del proyecto
 | Estado | Descripción |
 |--------|-------------|
 | Postulado | Postulación activa, dentro del plazo de seguimiento |
-| Vencido | Más de 15 días sin actualización — requiere atención |
+| Vencido | Más de 7 días sin actualización — requiere atención |
 | Rechazado | La empresa rechazó la postulación |
 
 El estado Vencido se calcula automáticamente en cada consulta; no se almacena en la base de datos.

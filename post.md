@@ -20,7 +20,7 @@ Es un gestor personal de postulaciones laborales con dos caras:
 **Web app (PHP + SQLite + Bootstrap):**
 - Registrar postulaciones con empresa, puesto, plataforma y URL de la oferta.
 - Seguimiento con estados: Postulado, Vencido o Rechazado.
-- Si pasan más de 15 días sin novedades, la postulación se marca automáticamente como Vencida.
+- Si pasan más de 7 días sin novedades, la postulación se marca automáticamente como Vencida.
 - Búsqueda y filtros en tiempo real sin recargar la página.
 - Métricas rápidas: total, activas, vencidas y rechazadas.
 

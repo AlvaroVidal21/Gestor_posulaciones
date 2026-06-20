@@ -20,13 +20,13 @@ Regla 6 en `docs/02_reglas_negocio.md`.
 
 `public/editar.php` muestra el `estado_real` actual y explica que al guardar se renueva la fecha.
 
-Tras guardar, `calcular_estado()` ya no devuelve `Vencido` mientras no pasen otros 15 días.
+Tras guardar, `calcular_estado()` ya no devuelve `Vencido` mientras no pasen otros 7 días.
 
 ## Que recordar
 
 **Editar = nueva señal de vida; el vencimiento se resetea con la fecha de hoy.**
 
 ## Relacionado
-- [[Regla - Vencimiento automatico a los 15 dias]]
+- [[Regla - Vencimiento automatico a los 7 dias]]
 - [[Decision - Vencido se calcula no se almacena]]
 - `public/editar.php`

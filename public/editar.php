@@ -7,7 +7,7 @@
  *
  * Si se envía por POST, valida y actualiza los datos en la BD.
  * Cada actualización modifica fecha_ultima_actualizacion, lo que
- * reinicia el contador de vencimiento de 15 días (Regla 5 y 6).
+ * reinicia el contador de vencimiento de 7 días (Regla 5 y 6).
  */
 
 require_once __DIR__ . '/../app/postulacion.php';
